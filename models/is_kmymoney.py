@@ -80,14 +80,24 @@ class kmn_accounts(models.Model):
 
 
         for obj in self:
-            view_id = self.env.ref('is_kmymoney15.kmn_account_move_tree_view_editable').id 
+            #view_id = self.env.ref('is_kmymoney15.kmn_account_move_tree_view_editable').id 
+            tree_view_id = self.env.ref('is_kmymoney15.kmn_account_move_tree_view_editable').id 
+            pivot_view_id = self.env.ref('is_kmymoney15.kmn_account_move_pivot_view').id 
+
+
             return {
                 'name': obj.name,
                 'res_model': 'kmn.account.move',
                 'type': 'ir.actions.act_window',
                 'view_mode': 'tree',
                 'domain' : ['|',('account1_id','=',obj.id),('account2_id','=',obj.id)],
-                'view_id': view_id,
+                #'view_id': view_id,
+                'views': [
+                    [tree_view_id, "tree"],
+                    [pivot_view_id, "pivot"]
+                ],
+
+
             }
 
 
@@ -172,17 +182,37 @@ class kmn_account_move(models.Model):
         if 'active_id' in context:
             active_id=context["active_id"]
         for obj in self:
-            view_id = self.env.ref('is_kmymoney15.kmn_account_move_tree_view_editable').id 
+            tree_view_id = self.env.ref('is_kmymoney15.kmn_account_move_tree_view_editable').id 
+            pivot_view_id = self.env.ref('is_kmymoney15.kmn_account_move_pivot_view').id 
+
+            # dummy, tree_view_id = self.env['ir.model.data'].get_object_reference('is_fromtome14', 'is_stock_inventory_line_tree')
+            # dummy, form_view_id = self.env['ir.model.data'].get_object_reference('is_fromtome14', 'is_stock_inventory_line_form')
+            # action = {
+            #     'type': 'ir.actions.act_window',
+            #     'view_mode': 'tree',
+            #     'name': _('Inventory Lines'),
+            #     'res_model': 'stock.inventory.line',
+            #     #'views': [[tree_view_id, "tree"], [form_view_id, "form"]],
+            #     #'view_id' : self.env.ref('stock.stock_inventory_line_tree').id,
+
+
+
             return {
                 'name': obj.account_id.name,
                 'res_model': 'kmn.account.move',
                 'type': 'ir.actions.act_window',
-                'view_mode': 'tree',
+                'view_mode': 'tree,pivot',
                 'domain' : ['|',('account2_id','=',obj.account_id.id),('account1_id','=',obj.account_id.id)],
                 'context':{
                     'active_id' : active_id
                 },
-                'view_id': view_id,
+                'views': [
+                    [tree_view_id, "tree"],
+                    [pivot_view_id, "pivot"]
+                ],
+
+
+#                'view_id': view_id,
             }
 
 

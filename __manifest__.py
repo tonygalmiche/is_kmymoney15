@@ -19,6 +19,7 @@ InfoSaône - Module Odoo 15 Module Odoo kMyMoney
         'views/is_kmymoney_report_view.xml',
         'report/solde_par_mois_report.xml',
         'report/solde_par_an_report.xml',
+        'report/solde_par_operation_report.xml',
     ],
     'installable': True,
     'application': True,

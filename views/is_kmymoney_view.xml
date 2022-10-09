@@ -199,6 +199,32 @@
             </form>
         </field>
     </record>
+
+
+
+    <record id="kmn_account_move_pivot_view" model="ir.ui.view">
+        <field name="name">kmn_account_move_pivot_view</field>
+        <field name="model">kmn.account.move</field>
+        <field name="arch" type="xml">
+            <pivot>
+                <!-- <field name="date_invoice"   type="col"/> -->
+                <field name="post_date"     type="row"/>
+                <field name="value" type="measure"/>
+            </pivot>
+        </field>
+    </record>
+    <!-- <record id="is_account_invoice_line_graph" model="ir.ui.view">
+        <field name="name">is_account_invoice_line_graph</field>
+        <field name="model">is.account.invoice.line</field>
+        <field name="arch" type="xml">
+            <graph type="bar" orientation="vertical" stacked="False">
+                <field name="date_invoice"   type="row"/>
+                <field name="price_subtotal" type="measure"/>
+            </graph>
+        </field>
+    </record> -->
+
+
     <record id="kmn_account_move_view_filter" model="ir.ui.view">
         <field name="name">kmn.account.move.view.filter</field>
         <field name="model">kmn.account.move</field>
@@ -217,7 +243,7 @@
         <field name="name">Opérations</field>
         <field name="type">ir.actions.act_window</field>
         <field name="res_model">kmn.account.move</field>
-        <field name="view_mode">tree,form</field>
+        <field name="view_mode">tree,form,pivot</field>
         <field name="search_view_id" ref="kmn_account_move_view_filter"/>
         <field name="context">{}</field>
     </record>
